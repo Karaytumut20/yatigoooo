@@ -16,7 +16,7 @@ export function HeroCinematic() {
   const y = useTransform(scrollY, [0, 500], [40, 0]);
 
   return (
-    <section className="relative h-screen min-height-[750px] w-full flex items-center overflow-hidden pt-20">
+    <section className="relative min-h-screen lg:h-screen w-full flex items-center overflow-hidden pt-28 pb-12 lg:py-0">
       {/* Cinematic top-view yacht background inspired by reference */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute inset-0 bg-[#021c24]/50 z-10 pointer-events-none" />

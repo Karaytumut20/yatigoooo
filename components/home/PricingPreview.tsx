@@ -27,7 +27,7 @@ export function PricingPreview() {
                 key={y.slug}
                 className={`relative bg-[#021C24]/80 border rounded-[32px] p-8 flex flex-col justify-between transition-all duration-300 ${
                   isPopular
-                    ? "border-[#C6A15B] shadow-[0_15px_30px_rgba(198,161,91,0.1)] scale-105 z-10"
+                    ? "border-[#C6A15B] shadow-[0_15px_30px_rgba(198,161,91,0.1)] lg:scale-105 z-10"
                     : "border-white/12 hover:border-white/20"
                 }`}
               >

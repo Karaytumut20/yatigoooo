@@ -12,6 +12,12 @@ body {
   position: relative;
 }
 
+@media (max-width: 767px) {
+  body {
+    padding-bottom: 80px;
+  }
+}
+
 /* Custom background animated grain texture effect */
 body::before {
   content: '';

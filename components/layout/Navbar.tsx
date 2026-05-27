@@ -19,6 +19,17 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
+
   const navLinks = [
     { label: "Ana Sayfa", href: "/" },
     { label: "Yatlarımız", href: "/yatlarimiz" },
@@ -87,7 +98,7 @@ export function Navbar() {
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-[999] bg-[#021C24]/98 backdrop-blur-2xl flex flex-col justify-center items-center gap-10 p-10 lg:hidden">
+        <div className="fixed inset-0 z-[999] bg-[#021C24]/98 backdrop-blur-2xl flex flex-col justify-start items-center gap-8 px-10 py-20 lg:hidden overflow-y-auto">
           <button
             onClick={() => setIsMobileMenuOpen(false)}
             className="absolute top-6 right-6 p-2 text-white hover:text-[#2ED3C6] cursor-pointer"
