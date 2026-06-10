@@ -46,7 +46,7 @@ export function HeroCinematic({ yachts, experiences }: { yachts: Yacht[], experi
               <Button variant="primary" size="lg">Hemen Rezervasyon Yap</Button>
             </Link>
             <Link href="/yatlarimiz">
-              <Button variant="glass" size="lg" className="text-white border-white/20 hover:bg-white/20">Yatları İncele</Button>
+              <Button size="lg" className="bg-white text-blue-600 hover:bg-slate-50 border-none shadow-lg hover:shadow-xl transition-all">Yatları İncele</Button>
             </Link>
           </div>
 

@@ -43,6 +43,8 @@ export default function BookingClient({
   const [existingBookings, setExistingBookings] = useState<any[]>([]);
   const [sortBy, setSortBy] = useState<"price-asc" | "price-desc" | "capacity-asc" | "capacity-desc" | "default">("default");
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+  const [isFilterPopupOpen, setIsFilterPopupOpen] = useState(false);
+  const filterPopupRef = useRef<HTMLDivElement>(null);
   const [calendarMonth, setCalendarMonth] = useState(() => {
     const initialMonth = new Date();
     initialMonth.setDate(1);
@@ -401,6 +403,19 @@ export default function BookingClient({
     return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, [isDatePickerOpen]);
 
+  useEffect(() => {
+    if (!isFilterPopupOpen) return;
+
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (filterPopupRef.current && !filterPopupRef.current.contains(event.target as Node)) {
+        setIsFilterPopupOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, [isFilterPopupOpen]);
+
   const handleYachtChange = (val: string) => {
     const yacht = yachts.find(item => item.slug === val);
     setBookingDetails(prev => ({ 
@@ -734,39 +749,55 @@ export default function BookingClient({
                     {step1Error}
                   </div>
                 )}
-                {/* Compact Filtreleme Bölümü */}
-                <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex flex-col gap-3.5 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:py-3 sm:px-4">
-                  <div className="flex flex-col gap-3 w-full sm:flex-row sm:items-center sm:w-auto">
-                    {/* Header: Filtrele ve Sıfırla */}
-                    <div className="flex items-center justify-between sm:justify-start">
-                      <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
-                        <svg className="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-                        </svg>
-                        Yatları Filtrele
-                      </span>
-                      {/* Mobilde sıfırla butonu en üst sağda */}
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setYachtFilter({ minPrice: 0, maxPrice: maxPriceLimit, minCapacity: 1 });
-                          setSortBy("default");
-                          setBookingDetails(prev => ({ ...prev, experienceSlug: initialExperienceSlug || experiences[0]?.slug || "" }));
-                        }}
-                        className="text-xs font-bold text-blue-600 hover:text-blue-700 transition-colors cursor-pointer sm:hidden"
-                      >
-                        Sıfırla
-                      </button>
-                    </div>
+                {/* Popup Filtreleme Butonu */}
+                <div className="relative flex justify-center w-full" ref={filterPopupRef}>
+                  <button
+                    type="button"
+                    onClick={() => setIsFilterPopupOpen(!isFilterPopupOpen)}
+                    className="flex items-center justify-center gap-2.5 px-8 py-3.5 bg-blue-600 text-white rounded-full text-sm font-bold shadow-[0_8px_20px_rgba(37,99,235,0.25)] hover:bg-blue-700 hover:shadow-[0_10px_25px_rgba(37,99,235,0.35)] hover:-translate-y-0.5 transition-all w-full sm:w-[320px] cursor-pointer"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                      <line x1="21" x2="14" y1="4" y2="4" />
+                      <line x1="10" x2="3" y1="4" y2="4" />
+                      <line x1="21" x2="12" y1="12" y2="12" />
+                      <line x1="8" x2="3" y1="12" y2="12" />
+                      <line x1="21" x2="16" y1="20" y2="20" />
+                      <line x1="12" x2="3" y1="20" y2="20" />
+                      <line x1="14" x2="14" y1="2" y2="6" />
+                      <line x1="8" x2="8" y1="10" y2="14" />
+                      <line x1="16" x2="16" y1="18" y2="22" />
+                    </svg>
+                    Filtrele
+                  </button>
 
-                    {/* Kapasite, Fiyat ve Deneyim - Mobilde alt alta veya yan yana */}
-                    <div className="flex flex-col gap-2 w-full sm:flex-row sm:items-center sm:gap-3 sm:w-auto">
+                  {isFilterPopupOpen && (
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-full sm:w-[320px] bg-white border border-slate-200 rounded-2xl shadow-xl z-50 p-5 flex flex-col gap-4">
+                      <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <span className="text-sm font-bold text-slate-800 flex items-center gap-2">
+                          <svg className="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                          </svg>
+                          Yatları Filtrele
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setYachtFilter({ minPrice: 0, maxPrice: maxPriceLimit, minCapacity: 1 });
+                            setSortBy("default");
+                            setBookingDetails(prev => ({ ...prev, experienceSlug: initialExperienceSlug || experiences[0]?.slug || "" }));
+                          }}
+                          className="text-xs font-bold text-blue-600 hover:text-blue-700 transition-colors cursor-pointer"
+                        >
+                          Sıfırla
+                        </button>
+                      </div>
+
                       {/* Deneyim Dropdown */}
-                      <div className="relative w-full sm:w-48">
+                      <div className="relative w-full">
                         <select
                           value={bookingDetails.experienceSlug}
                           onChange={(e) => setBookingDetails(prev => ({ ...prev, experienceSlug: e.target.value }))}
-                          className="appearance-none w-full bg-white border border-slate-200 rounded-xl pl-3 pr-8 py-2 sm:py-1.5 text-xs font-semibold text-slate-700 outline-none focus:border-blue-500 cursor-pointer"
+                          className="appearance-none w-full bg-white border border-slate-200 rounded-xl pl-4 pr-8 py-2.5 text-sm font-semibold text-slate-700 outline-none focus:border-blue-500 cursor-pointer"
                         >
                           <option value="">Tüm Deneyimler</option>
                           {experiences.map((exp) => (
@@ -775,19 +806,19 @@ export default function BookingClient({
                             </option>
                           ))}
                         </select>
-                        <div className="absolute inset-y-0 right-0 flex items-center pr-2.5 pointer-events-none text-slate-400">
-                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-400">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
                           </svg>
                         </div>
                       </div>
 
                       {/* Kapasite Dropdown */}
-                      <div className="relative w-full sm:w-36">
+                      <div className="relative w-full">
                         <select
                           value={yachtFilter.minCapacity}
                           onChange={(e) => setYachtFilter(prev => ({ ...prev, minCapacity: parseInt(e.target.value) || 1 }))}
-                          className="appearance-none w-full bg-white border border-slate-200 rounded-xl pl-3 pr-8 py-2 sm:py-1.5 text-xs font-semibold text-slate-700 outline-none focus:border-blue-500 cursor-pointer"
+                          className="appearance-none w-full bg-white border border-slate-200 rounded-xl pl-4 pr-8 py-2.5 text-sm font-semibold text-slate-700 outline-none focus:border-blue-500 cursor-pointer"
                         >
                           <option value="1">Kapasite: Tümü</option>
                           <option value="5">Min. 5 Kişi</option>
@@ -797,19 +828,19 @@ export default function BookingClient({
                           <option value="30">Min. 30 Kişi</option>
                           <option value="40">Min. 40 Kişi</option>
                         </select>
-                        <div className="absolute inset-y-0 right-0 flex items-center pr-2.5 pointer-events-none text-slate-400">
-                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-400">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
                           </svg>
                         </div>
                       </div>
 
                       {/* Fiyat Dropdown */}
-                      <div className="relative w-full sm:w-40">
+                      <div className="relative w-full">
                         <select
                           value={yachtFilter.maxPrice}
                           onChange={(e) => setYachtFilter(prev => ({ ...prev, maxPrice: parseInt(e.target.value) || 0 }))}
-                          className="appearance-none w-full bg-white border border-slate-200 rounded-xl pl-3 pr-8 py-2 sm:py-1.5 text-xs font-semibold text-slate-700 outline-none focus:border-blue-500 cursor-pointer"
+                          className="appearance-none w-full bg-white border border-slate-200 rounded-xl pl-4 pr-8 py-2.5 text-sm font-semibold text-slate-700 outline-none focus:border-blue-500 cursor-pointer"
                         >
                           <option value={maxPriceLimit}>Fiyat: Tümü</option>
                           <option value="3000">Maks. 3.000 TL</option>
@@ -821,47 +852,34 @@ export default function BookingClient({
                           <option value="30000">Maks. 30.000 TL</option>
                           <option value="50000">Maks. 50.000 TL</option>
                         </select>
-                        <div className="absolute inset-y-0 right-0 flex items-center pr-2.5 pointer-events-none text-slate-400">
-                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-400">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </div>
+                      </div>
+
+                      {/* Sıralama Dropdown */}
+                      <div className="relative w-full">
+                        <select
+                          value={sortBy}
+                          onChange={(e) => setSortBy(e.target.value as any)}
+                          className="appearance-none w-full bg-white border border-slate-200 rounded-xl pl-4 pr-8 py-2.5 text-sm font-semibold text-slate-700 outline-none focus:border-blue-500 cursor-pointer"
+                        >
+                          <option value="default">Sırala: Varsayılan</option>
+                          <option value="price-asc">Fiyat: Düşükten Yükseğe</option>
+                          <option value="price-desc">Fiyat: Yüksekten Düşüğe</option>
+                          <option value="capacity-asc">Kapasite: Düşükten Yükseğe</option>
+                          <option value="capacity-desc">Kapasite: Yüksekten Düşüğe</option>
+                        </select>
+                        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-400">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
                           </svg>
                         </div>
                       </div>
                     </div>
-
-                    {/* Sıralama Dropdown */}
-                    <div className="relative w-full sm:w-auto">
-                      <select
-                        value={sortBy}
-                        onChange={(e) => setSortBy(e.target.value as any)}
-                        className="appearance-none w-full bg-white border border-slate-200 rounded-xl pl-3 pr-8 py-2 sm:py-1.5 text-xs font-semibold text-slate-700 outline-none focus:border-blue-500 cursor-pointer"
-                      >
-                        <option value="default">Sırala: Varsayılan</option>
-                        <option value="price-asc">Fiyat: Düşükten Yükseğe</option>
-                        <option value="price-desc">Fiyat: Yüksekten Düşüğe</option>
-                        <option value="capacity-asc">Kapasite: Düşükten Yükseğe</option>
-                        <option value="capacity-desc">Kapasite: Yüksekten Düşüğe</option>
-                      </select>
-                      <div className="absolute inset-y-0 right-0 flex items-center pr-2.5 pointer-events-none text-slate-400">
-                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Masaüstünde sıfırla butonu en sağda */}
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setYachtFilter({ minPrice: 0, maxPrice: maxPriceLimit, minCapacity: 1 });
-                      setSortBy("default");
-                      setBookingDetails(prev => ({ ...prev, experienceSlug: initialExperienceSlug || experiences[0]?.slug || "" }));
-                    }}
-                    className="text-xs font-bold text-blue-600 hover:text-blue-700 transition-colors cursor-pointer hidden sm:block"
-                  >
-                    Filtreleri Sıfırla
-                  </button>
+                  )}
                 </div>
 
                 {/* Yatlar Grid - Mobilde Horizontal Scroll */}

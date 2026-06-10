@@ -35,7 +35,7 @@ export function FinalCTA() {
             </Button>
           </a>
           <a href="tel:+902125556677">
-            <Button variant="glass" className="flex items-center gap-2 text-white border-white/20 hover:bg-white/15">
+            <Button className="flex items-center gap-2 bg-white text-blue-600 border-none hover:bg-slate-50 hover:shadow-lg transition-all">
               <Phone size={18} />
               <span>Hemen Arayın</span>
             </Button>
