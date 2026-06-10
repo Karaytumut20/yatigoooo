@@ -149,7 +149,7 @@ export function Navbar() {
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-[99999] bg-white lg:hidden flex flex-col h-screen overflow-hidden">
+        <div className="fixed inset-0 z-[99999] bg-white lg:hidden flex flex-col h-[100dvh] overflow-hidden">
           {/* Header of mobile menu */}
           <div className="flex items-center justify-between px-5 h-[72px] border-b border-slate-100 bg-white shrink-0">
             {/* Logo */}
@@ -225,7 +225,7 @@ export function Navbar() {
             </nav>
 
             {/* Bottom Actions Area with Divider */}
-            <div className="mt-auto pt-6 border-t border-slate-100 flex flex-col gap-4 relative">
+            <div className="mt-auto pt-6 pb-6 sm:pb-8 border-t border-slate-100 flex flex-col gap-4 relative">
               {/* Giriş Yap / Hesabım */}
               {user ? (
                 <Link

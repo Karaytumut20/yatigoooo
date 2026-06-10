@@ -18,7 +18,7 @@ export function HeroCinematic({ yachts, experiences }: { yachts: Yacht[], experi
   const y = useTransform(scrollY, [0, 500], [40, 0]);
 
   return (
-    <section className="relative min-h-screen lg:h-screen w-full flex items-center overflow-hidden pt-28 pb-12 lg:py-0">
+    <section className="relative min-h-[100dvh] lg:h-[100dvh] w-full flex items-center overflow-hidden pt-28 pb-12 lg:py-0">
       {/* Background image with navy/blue overlay */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0F172A]/75 via-[#1E3A5F]/60 to-[#0F172A]/70 z-10 pointer-events-none" />
