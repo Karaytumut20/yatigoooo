@@ -149,7 +149,7 @@ export function Navbar() {
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-[2000] bg-white lg:hidden flex flex-col h-screen overflow-hidden">
+        <div className="fixed inset-0 z-[99999] bg-white lg:hidden flex flex-col h-screen overflow-hidden">
           {/* Header of mobile menu */}
           <div className="flex items-center justify-between px-5 h-[72px] border-b border-slate-100 bg-white shrink-0">
             {/* Logo */}
@@ -226,17 +226,6 @@ export function Navbar() {
 
             {/* Bottom Actions Area with Divider */}
             <div className="mt-auto pt-6 border-t border-slate-100 flex flex-col gap-4 relative">
-              {/* Floating WhatsApp Button just above the divider / bottom button */}
-              <a
-                href="https://wa.me/905556667788"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="absolute -top-16 right-0 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_4px_12px_rgba(37,211,102,0.3)] transition-transform hover:scale-105 active:scale-95 cursor-pointer"
-                aria-label="WhatsApp Destek"
-              >
-                <WhatsAppIcon size={26} />
-              </a>
-
               {/* Giriş Yap / Hesabım */}
               {user ? (
                 <Link
