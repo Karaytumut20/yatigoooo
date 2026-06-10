@@ -475,6 +475,11 @@ export default function BookingClient({
     }
   }, [yachtFilter, filteredYachts, bookingDetails.yachtSlug]);
 
+  // Her adım değiştiğinde sayfayı en üste kaydır
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [step]);
+
   const selectedYacht = yachts.find(y => y.slug === bookingDetails.yachtSlug);
   const selectedExp = experiences.find(e => e.slug === bookingDetails.experienceSlug) || experiences[0];
   const extraGuestPricing = selectedYacht?.extraGuestPricing || [];
