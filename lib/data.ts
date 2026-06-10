@@ -181,7 +181,7 @@ export const EXPERIENCES: Experience[] = [
       { question: "Hava yağmurlu olursa ne olur?", answer: "Yatlarımızın kapalı salonları ısıtmalıdır. Şiddetli fırtına veya sis olmadığı sürece turlarımız kesintisiz gerçekleştirilir." }
     ],
     seo: {
-      title: "İstanbul Boğazı Özel Yat Turu | VIP Bosphorus Yacht Charter",
+      title: "İstanbul Boğazı Özel Yat Turu | VIP yatigotr",
       description: "İstanbul Boğazı'nda size özel kiralık yatlarla VIP yat turu. Kaptanlı, mürettebatlı, ikramlı lüks Boğaz gezisi rezervasyonu yapın."
     }
   },

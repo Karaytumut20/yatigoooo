@@ -4,32 +4,40 @@ import React from "react";
 import { Slider } from "../ui/Slider";
 import { Counter } from "../ui/Counter";
 import { Toggle } from "../ui/Toggle";
+import { Yacht } from "../../types/yacht";
 
 interface YachtFilterPanelProps {
+  yachts: Yacht[];
+  maximumHourlyPrice: number;
   filters: {
     type: string;
     price: number;
     capacity: number;
-    cabins: number;
-    pool: boolean;
-    flybridge: boolean;
+    length: number;
   };
   setFilters: React.Dispatch<React.SetStateAction<{
     type: string;
     price: number;
     capacity: number;
-    cabins: number;
-    pool: boolean;
-    flybridge: boolean;
+    length: number;
   }>>;
 }
 
-export function YachtFilterPanel({ filters, setFilters }: YachtFilterPanelProps) {
+export function YachtFilterPanel({ yachts, filters, setFilters, maximumHourlyPrice }: YachtFilterPanelProps) {
+  // Dynamically extract unique types and format label
+  const typeMap: Record<string, string> = {
+    "motor-yacht": "Motor Yat",
+    "catamaran": "Katamaran",
+    "mega-yacht": "Mega Yat"
+  };
+  const uniqueTypes = Array.from(new Set(yachts.map((y) => y.yachtType).filter(Boolean))) as string[];
+  const dynamicTypes = Array.from(new Set(["motor-yacht", "catamaran", "mega-yacht", ...uniqueTypes]));
   const types = [
     { key: "all", label: "Tümü" },
-    { key: "motor-yacht", label: "Motor Yat" },
-    { key: "catamaran", label: "Katamaran" },
-    { key: "mega-yacht", label: "Mega Yat" }
+    ...dynamicTypes.map((t) => ({
+      key: t,
+      label: typeMap[t] || (t.charAt(0).toUpperCase() + t.slice(1).replace("-", " "))
+    }))
   ];
 
   const updateFilter = (key: string, value: any) => {
@@ -39,21 +47,19 @@ export function YachtFilterPanel({ filters, setFilters }: YachtFilterPanelProps)
   const clearFilters = () => {
     setFilters({
       type: "all",
-      price: 500,
+      price: maximumHourlyPrice,
       capacity: 1,
-      cabins: 0,
-      pool: false,
-      flybridge: false
+      length: 0
     });
   };
 
   return (
-    <div className="bg-[#021C24]/85 border border-white/12 rounded-[32px] p-6 lg:p-8 flex flex-col gap-8 sticky top-[110px]">
-      <div className="flex items-center justify-between border-b border-white/10 pb-4">
-        <h3 className="text-sm font-bold uppercase tracking-wider text-white">Yat Filtreleri</h3>
+    <div className="bg-white border border-slate-200 rounded-2xl p-6 lg:p-8 flex flex-col gap-8 sticky top-[110px] shadow-sm">
+      <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+        <h3 className="text-sm font-bold uppercase tracking-wider text-slate-800">Yat Filtreleri</h3>
         <button
           onClick={clearFilters}
-          className="text-xs text-white/50 hover:text-[#2ED3C6] transition-all cursor-pointer"
+          className="text-xs text-slate-400 hover:text-blue-600 transition-all cursor-pointer"
         >
           Temizle
         </button>
@@ -61,7 +67,7 @@ export function YachtFilterPanel({ filters, setFilters }: YachtFilterPanelProps)
 
       {/* Yacht Type */}
       <div className="flex flex-col gap-3">
-        <h4 className="text-xs uppercase tracking-widest text-[#C6A15B] font-bold">Yat Türü</h4>
+        <h4 className="text-xs uppercase tracking-widest text-blue-600 font-bold">Yat Türü</h4>
         <div className="flex flex-wrap gap-2">
           {types.map((t) => (
             <button
@@ -69,8 +75,8 @@ export function YachtFilterPanel({ filters, setFilters }: YachtFilterPanelProps)
               onClick={() => updateFilter("type", t.key)}
               className={`px-4 py-2 rounded-xl text-xs font-semibold border transition-all duration-300 cursor-pointer ${
                 filters.type === t.key
-                  ? "bg-[#2ED3C6] border-[#2ED3C6] text-[#021C24]"
-                  : "bg-white/5 border-white/8 text-white hover:bg-white/10"
+                  ? "bg-blue-600 border-blue-600 text-white"
+                  : "bg-slate-50 border-slate-200 text-slate-600 hover:bg-blue-50 hover:border-blue-200"
               }`}
             >
               {t.label}
@@ -81,46 +87,31 @@ export function YachtFilterPanel({ filters, setFilters }: YachtFilterPanelProps)
 
       {/* Hourly Price Range */}
       <div className="flex flex-col gap-3">
-        <h4 className="text-xs uppercase tracking-widest text-[#C6A15B] font-bold">Saatlik Bütçe (Max)</h4>
+        <h4 className="text-xs uppercase tracking-widest text-blue-600 font-bold">Saatlik Bütçe (Max)</h4>
         <Slider
           min={150}
-          max={500}
+          max={maximumHourlyPrice}
           value={filters.price}
           onChange={(val) => updateFilter("price", val)}
-          labelPrefix="€"
+          labelSuffix=" TL"
         />
       </div>
 
-      {/* Capacity & Cabin Counter */}
-      <div className="flex flex-col gap-4 border-t border-b border-white/10 py-6">
+      {/* Capacity & Cabin & Tech Specs Counter */}
+      <div className="flex flex-col gap-4 border-t border-b border-slate-100 py-6">
         <Counter
           label="Min Kapasite"
           value={filters.capacity}
           min={1}
-          max={40}
+          max={60}
           onChange={(val) => updateFilter("capacity", val)}
         />
         <Counter
-          label="Min Kabin"
-          value={filters.cabins}
+          label="Min Uzunluk (Metre)"
+          value={filters.length}
           min={0}
-          max={5}
-          onChange={(val) => updateFilter("cabins", val)}
-        />
-      </div>
-
-      {/* Extra Amenities toggles */}
-      <div className="flex flex-col gap-2">
-        <h4 className="text-xs uppercase tracking-widest text-[#C6A15B] font-bold mb-2">Özellikler</h4>
-        <Toggle
-          label="Havuz / Jakuzi"
-          checked={filters.pool}
-          onChange={(val) => updateFilter("pool", val)}
-        />
-        <Toggle
-          label="Flybridge"
-          checked={filters.flybridge}
-          onChange={(val) => updateFilter("flybridge", val)}
+          max={50}
+          onChange={(val) => updateFilter("length", val)}
         />
       </div>
     </div>

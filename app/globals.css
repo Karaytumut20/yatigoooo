@@ -1,8 +1,22 @@
 @import "tailwindcss";
 
 :root {
-  --background: #021C24;
-  --foreground: #F4FBFA;
+  --color-white: #FFFFFF;
+  --color-bg: #F7F9FC;
+  --color-navy: #0F172A;
+  --color-navy-light: #1E293B;
+  --color-blue: #2563EB;
+  --color-blue-light: #60A5FA;
+  --color-blue-soft: #DBEAFE;
+  --color-sky: #EFF6FF;
+  --color-text: #334155;
+  --color-text-light: #94A3B8;
+  --color-border: #E2E8F0;
+  --color-success: #10B981;
+  --color-gold: #F59E0B;
+
+  --background: #FFFFFF;
+  --foreground: #334155;
 }
 
 body {
@@ -12,47 +26,59 @@ body {
   position: relative;
 }
 
-@media (max-width: 767px) {
-  body {
-    padding-bottom: 80px;
-  }
-}
-
-/* Custom background animated grain texture effect */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: 
-    radial-gradient(circle at 15% 25%, rgba(6, 59, 69, 0.4) 0%, transparent 45%),
-    radial-gradient(circle at 85% 75%, rgba(46, 211, 198, 0.08) 0%, transparent 45%);
-  z-index: -2;
-  pointer-events: none;
-}
-
 /* Smooth range slider track */
 input[type="range"] {
   -webkit-appearance: none;
-  background: rgba(255, 255, 255, 0.1);
+  background: #E2E8F0;
   border-radius: 99px;
   outline: none;
 }
 
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  background: #2ED3C6;
+  background: #2563EB;
   cursor: pointer;
   transition: transform 0.2s ease;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
 }
 
 input[type="range"]::-webkit-slider-thumb:hover {
   transform: scale(1.2);
+}
+
+/* Smooth animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 @keyframes zoom {
@@ -61,5 +87,52 @@ input[type="range"]::-webkit-slider-thumb:hover {
   }
   100% {
     transform: scale(1.08) translateY(-15px);
+  }
+}
+
+/* Subtle gradient background for select sections */
+.section-gradient-sky {
+  background: linear-gradient(180deg, #EFF6FF 0%, #FFFFFF 100%);
+}
+
+.section-gradient-white {
+  background: linear-gradient(180deg, #FFFFFF 0%, #F7F9FC 100%);
+}
+
+/* Modern scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+@layer components {
+  .input {
+    @apply w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm font-normal outline-none transition-colors focus:border-blue-500 focus:bg-white;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  .admin-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-700;
+  }
+  .admin-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-200;
+  }
+  .admin-card {
+    @apply flex items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 shadow-sm;
+  }
+  .admin-icon {
+    @apply rounded-lg p-2 transition-colors hover:bg-slate-100;
+  }
+  .overflow-wrap-anywhere {
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 }

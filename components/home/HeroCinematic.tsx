@@ -7,8 +7,10 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 import { Button } from "../ui/Button";
 import { QuickBookingBar } from "./QuickBookingBar";
+import { Yacht } from "../../types/yacht";
+import { Experience } from "../../types/experience";
 
-export function HeroCinematic() {
+export function HeroCinematic({ yachts, experiences }: { yachts: Yacht[], experiences: Experience[] }) {
   const { scrollY } = useScroll();
   // Image scale and opacity transitions driven by scroll position
   const scale = useTransform(scrollY, [0, 500], [0.85, 1]);
@@ -17,60 +19,54 @@ export function HeroCinematic() {
 
   return (
     <section className="relative min-h-screen lg:h-screen w-full flex items-center overflow-hidden pt-28 pb-12 lg:py-0">
-      {/* Cinematic top-view yacht background inspired by reference */}
+      {/* Background image with navy/blue overlay */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        <div className="absolute inset-0 bg-[#021c24]/50 z-10 pointer-events-none" />
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-5">
-          <span className="font-serif text-[18vw] font-bold text-white/5 opacity-[0.06] tracking-tighter leading-none select-none">
-            YATIGOTR
-          </span>
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0F172A]/75 via-[#1E3A5F]/60 to-[#0F172A]/70 z-10 pointer-events-none" />
         <Image
           src="/yacht_aerial_hero.png"
           alt="Istanbul Bosphorus Luxury Yacht"
           fill
           priority
-          className="object-cover scale-105 animate-[zoom_20s_infinite_alternate] brightness-[0.4] contrast-[1.1]"
+          className="object-cover scale-105 animate-[zoom_20s_infinite_alternate] brightness-[0.5]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#021C24] via-transparent to-transparent h-1/2 bottom-0 z-10" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-white via-white/60 to-transparent z-10" />
       </div>
 
       <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-20 w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <div className="lg:col-span-7 flex flex-col gap-6 text-left">
-          <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-light text-white leading-[1.1] tracking-tight">
-            İstanbul Boğazı’nda <br />
-            <span className="text-[#2ED3C6] font-medium italic">Size Özel</span> Yat Deneyimi
+          <h1 className="font-sans text-4xl sm:text-6xl lg:text-7xl font-bold text-white leading-[1.08] tracking-tight">
+            İstanbul Boğazı'nda <br />
+            <span className="text-blue-400 font-medium">Size Özel</span> Yat Deneyimi
           </h1>
-          <p className="text-white/75 text-base sm:text-lg lg:text-xl font-light leading-relaxed max-w-[620px]">
+          <p className="text-white/80 text-base sm:text-lg lg:text-xl font-light leading-relaxed max-w-[620px]">
             Boğaz turu, gün batımı, yemekli tur ve özel organizasyonlar için premium yatınızı seçin, dakikalar içinde rezervasyon yapın.
           </p>
           <div className="flex flex-wrap gap-4 mt-4">
             <Link href="/rezervasyon">
-              <Button variant="primary">Hemen Rezervasyon Yap</Button>
+              <Button variant="primary" size="lg">Hemen Rezervasyon Yap</Button>
             </Link>
             <Link href="/yatlarimiz">
-              <Button variant="secondary">Yatları İncele</Button>
+              <Button variant="glass" size="lg" className="text-white border-white/20 hover:bg-white/20">Yatları İncele</Button>
             </Link>
           </div>
 
-          <div className="flex flex-wrap gap-6 mt-8 border-t border-white/10 pt-6">
-            <div className="flex items-center gap-2.5 text-xs sm:text-sm text-white/70">
-              <CheckCircle2 size={18} className="text-[#2ED3C6]" />
+          <div className="flex flex-wrap gap-6 mt-8 border-t border-white/15 pt-6">
+            <div className="flex items-center gap-2.5 text-xs sm:text-sm text-white/75">
+              <CheckCircle2 size={18} className="text-blue-400" />
               <span>Güvenli Ödeme</span>
             </div>
-            <div className="flex items-center gap-2.5 text-xs sm:text-sm text-white/70">
-              <CheckCircle2 size={18} className="text-[#2ED3C6]" />
+            <div className="flex items-center gap-2.5 text-xs sm:text-sm text-white/75">
+              <CheckCircle2 size={18} className="text-blue-400" />
               <span>Profesyonel Mürettebat</span>
             </div>
-            <div className="flex items-center gap-2.5 text-xs sm:text-sm text-white/70">
-              <CheckCircle2 size={18} className="text-[#2ED3C6]" />
+            <div className="flex items-center gap-2.5 text-xs sm:text-sm text-white/75">
+              <CheckCircle2 size={18} className="text-blue-400" />
               <span>Anında Onay</span>
             </div>
           </div>
         </div>
-
-        <div className="lg:col-span-5 w-full max-w-[450px] lg:max-w-none mx-auto">
-          <QuickBookingBar />
+        <div className="lg:col-span-5 w-full max-w-[450px] lg:max-w-none mx-auto relative z-30">
+          <QuickBookingBar yachts={yachts} experiences={experiences} />
         </div>
       </div>
     </section>

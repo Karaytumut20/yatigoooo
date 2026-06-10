@@ -23,7 +23,7 @@ export function Drawer({ isOpen, onClose, title, children }: DrawerProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-[#021C24]/80 backdrop-blur-sm"
+            className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
           />
 
           {/* Drawer Box */}
@@ -32,18 +32,18 @@ export function Drawer({ isOpen, onClose, title, children }: DrawerProps) {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
-            className="relative w-full max-w-md bg-[#021C24] border-l border-white/12 p-6 flex flex-col h-full shadow-2xl z-10 overflow-y-auto"
+            className="relative w-full max-w-md bg-white border-l border-slate-200 p-6 flex flex-col h-full shadow-2xl z-10 overflow-y-auto"
           >
-            <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
-              {title && <h3 className="text-lg font-bold tracking-wider uppercase text-white font-sans">{title}</h3>}
+            <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+              {title && <h3 className="text-lg font-bold tracking-wider uppercase text-slate-800 font-sans">{title}</h3>}
               <button
                 onClick={onClose}
-                className="p-2 hover:bg-white/10 rounded-full text-white/60 hover:text-white transition-all cursor-pointer"
+                className="p-2 hover:bg-slate-100 rounded-full text-slate-400 hover:text-slate-700 transition-all cursor-pointer"
               >
                 <X size={20} />
               </button>
             </div>
-            <div className="flex-1 text-white">{children}</div>
+            <div className="flex-1 text-slate-700">{children}</div>
           </motion.div>
         </div>
       )}

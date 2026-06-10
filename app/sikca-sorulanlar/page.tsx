@@ -23,14 +23,14 @@ export default function FAQPage() {
   ];
 
   return (
-    <main className="bg-[#021C24] min-h-screen text-white pt-32 pb-12">
+    <main className="bg-slate-50 min-h-screen pt-32 pb-12">
       <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-20 mb-16">
         <div className="text-center max-w-[720px] mx-auto mb-16 flex flex-col gap-4">
-          <span className="text-xs uppercase tracking-widest text-[#2ED3C6] font-bold">Merak Edilenler</span>
-          <h1 className="font-serif text-4xl sm:text-6xl text-white leading-tight">
+          <span className="text-xs uppercase tracking-widest text-blue-600 font-bold">Merak Edilenler</span>
+          <h1 className="font-sans text-4xl sm:text-6xl text-slate-900 font-bold leading-tight">
             Sıkça Sorulan Sorular
           </h1>
-          <p className="text-white/60 text-sm sm:text-base leading-relaxed">
+          <p className="text-slate-500 text-sm sm:text-base leading-relaxed">
             Boğaz'da yat kiralama süreci, iptal politikaları, yeme-içme seçenekleri ve ödeme koşulları hakkında en çok sorulan soruların yanıtları.
           </p>
         </div>

@@ -1,97 +1,56 @@
-"use client";
-
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { BLOG_POSTS } from "../../lib/data";
+import { getBlogPosts } from "../../lib/api";
 import { FinalCTA } from "../../components/home/FinalCTA";
 
-export default function BlogCatalogPage() {
-  const featured = BLOG_POSTS[0];
+export default async function BlogCatalogPage() {
+  const posts = await getBlogPosts();
 
   return (
-    <main className="bg-[#021C24] min-h-screen text-white pt-32 pb-12">
+    <main className="bg-slate-50 min-h-screen pt-32 pb-12">
       <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-20 mb-12">
         <div className="flex flex-col gap-3">
-          <span className="text-xs uppercase tracking-widest text-[#2ED3C6] font-bold">Bosphorus Editorial</span>
-          <h1 className="font-serif text-4xl sm:text-6xl text-white leading-none">
+          <span className="text-xs uppercase tracking-widest text-blue-600 font-bold">Bosphorus Editorial</span>
+          <h1 className="font-sans text-4xl sm:text-6xl text-slate-900 font-bold leading-none">
             Yatçılık Dergisi
           </h1>
-          <p className="text-white/60 text-base sm:text-lg max-w-[620px] leading-relaxed mt-2">
+          <p className="text-slate-500 text-base sm:text-lg max-w-[620px] leading-relaxed mt-2">
             Lüks yatçılık kültürü, İstanbul Boğazı gezi rehberleri ve özel tüyolarla dolu dergimizi keşfedin.
           </p>
         </div>
       </div>
 
-      {/* Featured post */}
-      {featured && (
-        <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-20 mb-16">
-          <div className="bg-white/5 border border-white/12 rounded-[32px] overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-8 p-6 sm:p-8 items-center">
-            <div className="lg:col-span-7 relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-[#063B45]">
-              <Image
-                src={featured.image}
-                alt={featured.title}
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div className="lg:col-span-5 flex flex-col gap-4">
-              <div className="flex items-center gap-3 text-xs text-white/50 uppercase tracking-wider font-bold">
-                <span className="text-[#2ED3C6]">{featured.category}</span>
-                <span>•</span>
-                <span>{featured.readTime}</span>
-              </div>
-              <h2 className="font-serif text-2xl sm:text-4xl text-white font-medium group-hover:text-[#2ED3C6] transition-all">
-                {featured.title}
-              </h2>
-              <p className="text-white/60 text-sm sm:text-base leading-relaxed">
-                {featured.excerpt}
-              </p>
-              <div className="pt-2">
-                <Link href={`/blog/${featured.slug}`}>
-                  <button className="px-6 py-3.5 rounded-full bg-[#2ED3C6] text-[#021C24] text-xs font-bold hover:shadow-[0_0_15px_rgba(46,211,198,0.4)] transition-all cursor-pointer">
-                    Okumaya Devam Et
-                  </button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* Grid of posts */}
-      <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
-        {BLOG_POSTS.map((post) => (
-          <div
-            key={post.slug}
-            className="group bg-white/5 border border-white/12 rounded-[32px] overflow-hidden flex flex-col transition-all duration-300 hover:border-[#2ED3C6] hover:-translate-y-1 hover:shadow-2xl"
-          >
-            <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#063B45]">
-              <Image
-                src={post.image}
-                alt={post.title}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-              />
+      <div className="max-w-[1600px] mx-auto px-5 sm:px-10 lg:px-16 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-20">
+        {posts.map((post) => (
+          <div key={post.slug} className="group relative aspect-[4/5] flex flex-col border rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-white border-slate-200">
+            <div className="relative h-[46%] w-full shrink-0 overflow-hidden bg-gradient-to-br from-slate-100 to-blue-50">
+              {post.showImage !== false ? (
+                <Image src={post.image} alt={post.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
+              ) : (
+                <>
+                  <div className="absolute -right-8 -top-8 h-28 w-28 rounded-full border-[18px] border-blue-100/70" />
+                  <div className="absolute left-5 bottom-5 text-xs font-bold uppercase tracking-[0.2em] text-blue-300">Bosphorus Editorial</div>
+                </>
+              )}
             </div>
-            <div className="p-8 flex flex-col justify-between flex-1 gap-6">
-              <div className="flex flex-col gap-3">
-                <div className="flex items-center gap-2 text-xs text-white/50 uppercase tracking-wider font-bold">
-                  <span className="text-[#2ED3C6]">{post.category}</span>
-                  <span>•</span>
-                  <span>{post.readTime}</span>
+            <div className="relative p-5 flex flex-col justify-between flex-1 min-h-0 gap-4">
+              <div className="relative flex flex-col min-h-0 gap-2">
+                <div className="flex items-center gap-2 text-[11px] uppercase tracking-wider font-bold text-slate-400">
+                  <span className="text-blue-600">{post.category}</span>
                 </div>
-                <h3 className="font-serif text-2xl text-white font-medium group-hover:text-[#2ED3C6] transition-all">
+                <h3 className="font-sans font-bold transition-all line-clamp-3 text-lg text-slate-900 group-hover:text-blue-600">
                   {post.title}
                 </h3>
-                <p className="text-white/60 text-sm leading-relaxed line-clamp-3">
+                <p className="text-sm leading-relaxed line-clamp-3 text-slate-500">
                   {post.excerpt}
                 </p>
               </div>
-              <div className="border-t border-white/8 pt-5">
+              <div className="relative w-full pt-3 border-t border-slate-100">
                 <Link href={`/blog/${post.slug}`} className="w-full block">
-                  <button className="w-full py-3 rounded-full border border-white/12 text-white text-xs font-bold hover:bg-white/10 transition-all cursor-pointer">
-                    Yazıyı Oku
+                  <button className="w-full py-2.5 rounded-full text-xs font-bold transition-all cursor-pointer border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-blue-200 hover:text-blue-600">
+                    Yazıyı Oku →
                   </button>
                 </Link>
               </div>

@@ -1,4 +1,6 @@
-import { YACHTS, EXPERIENCES, BLOG_POSTS } from "../lib/data";
+import { getYachts, getExperiences, getBlogPosts } from "../lib/api";
+
+export const dynamic = "force-dynamic";
 
 export default async function sitemap() {
   const baseUrl = "https://bosphorusyachtcharter.com";
@@ -8,7 +10,6 @@ export default async function sitemap() {
     "",
     "/yatlarimiz",
     "/deneyimler",
-    "/yat-kiralama-fiyatlari",
     "/rezervasyon",
     "/blog",
     "/hakkimizda",
@@ -21,8 +22,14 @@ export default async function sitemap() {
     priority: route === "" ? 1.0 : 0.8,
   }));
 
+  const [yachts, experiences, blogPosts] = await Promise.all([
+    getYachts(),
+    getExperiences(),
+    getBlogPosts()
+  ]);
+
   // Dynamic Yacht pages
-  const yachtPages = YACHTS.map((y) => ({
+  const yachtPages = yachts.map((y) => ({
     url: `${baseUrl}/yatlarimiz/${y.slug}`,
     lastModified: new Date().toISOString(),
     changeFrequency: "weekly" as const,
@@ -30,7 +37,7 @@ export default async function sitemap() {
   }));
 
   // Dynamic Experience pages
-  const experiencePages = EXPERIENCES.map((e) => ({
+  const experiencePages = experiences.map((e) => ({
     url: `${baseUrl}/deneyimler/${e.slug}`,
     lastModified: new Date().toISOString(),
     changeFrequency: "weekly" as const,
@@ -38,7 +45,7 @@ export default async function sitemap() {
   }));
 
   // Dynamic Blog pages
-  const blogPages = BLOG_POSTS.map((bp) => ({
+  const blogPages = blogPosts.map((bp) => ({
     url: `${baseUrl}/blog/${bp.slug}`,
     lastModified: new Date().toISOString(),
     changeFrequency: "monthly" as const,

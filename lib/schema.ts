@@ -6,7 +6,7 @@ export function getLocalBusinessSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "name": "Bosphorus Yacht Charter",
+    "name": "yatigotr",
     "image": "https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?auto=format&fit=crop&q=80&w=800",
     "telephone": "+902125556677",
     "email": "info@bosphorusyachtcharter.com",
@@ -37,7 +37,7 @@ export function getYachtSchema(yacht: Yacht) {
     "description": yacht.shortDescription,
     "offers": {
       "@type": "Offer",
-      "priceCurrency": "EUR",
+      "priceCurrency": "TRY",
       "price": yacht.hourlyPrice,
       "priceValidUntil": "2027-12-31",
       "availability": "https://schema.org/InStock"
@@ -53,11 +53,11 @@ export function getExperienceSchema(experience: Experience) {
     "description": experience.shortDescription,
     "provider": {
       "@type": "LocalBusiness",
-      "name": "Bosphorus Yacht Charter"
+      "name": "yatigotr"
     },
     "offers": {
       "@type": "Offer",
-      "priceCurrency": "EUR",
+      "priceCurrency": "TRY",
       "price": experience.startingPrice
     }
   };
@@ -72,7 +72,7 @@ export function getBlogArticleSchema(post: BlogPost) {
     "datePublished": "2026-05-27T00:00:00Z",
     "author": {
       "@type": "Organization",
-      "name": "Bosphorus Yacht Charter"
+      "name": "yatigotr"
     }
   };
 }

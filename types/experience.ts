@@ -4,6 +4,7 @@ export interface FAQ {
 }
 
 export interface Experience {
+  id?: string;
   slug: string;
   title: string;
   category: string;
@@ -17,7 +18,7 @@ export interface Experience {
   sampleFlow: string[];
   recommendedYachts: string[];
   faq: FAQ[];
-  seo: {
+  seo?: {
     title: string;
     description: string;
   };

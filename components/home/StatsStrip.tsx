@@ -9,14 +9,14 @@ export function StatsStrip() {
   ];
 
   return (
-    <div className="border-t border-b border-white/12 py-10 bg-[#063B45]/15 text-white">
+    <div className="border-t border-b border-slate-100 py-12 bg-white">
       <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-20 grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
         {stats.map((stat, idx) => (
           <div key={idx} className="flex flex-col gap-1.5">
-            <span className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-[#2ED3C6]">
+            <span className="font-sans text-3xl sm:text-4xl lg:text-5xl font-bold text-blue-600">
               {stat.value}
             </span>
-            <span className="text-[10px] sm:text-xs text-white/50 uppercase tracking-widest font-semibold">
+            <span className="text-[10px] sm:text-xs text-slate-500 uppercase tracking-widest font-semibold">
               {stat.label}
             </span>
           </div>

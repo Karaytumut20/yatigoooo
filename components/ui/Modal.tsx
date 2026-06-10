@@ -23,7 +23,7 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-[#021C24]/80 backdrop-blur-md"
+            className="absolute inset-0 bg-slate-900/40 backdrop-blur-md"
           />
 
           {/* Modal Box */}
@@ -32,18 +32,18 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.95, opacity: 0, y: 20 }}
             transition={{ type: "spring", duration: 0.5 }}
-            className="relative w-full max-w-2xl bg-[#063B45]/90 border border-white/12 rounded-[32px] p-6 sm:p-8 shadow-2xl backdrop-blur-2xl overflow-y-auto max-h-[90vh]"
+            className="relative w-full max-w-2xl bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-2xl overflow-y-auto max-h-[90vh]"
           >
             <div className="flex items-center justify-between mb-6">
-              {title && <h3 className="font-serif text-2xl text-white">{title}</h3>}
+              {title && <h3 className="font-sans text-2xl text-slate-800 font-bold">{title}</h3>}
               <button
                 onClick={onClose}
-                className="p-2 hover:bg-white/10 rounded-full text-white/60 hover:text-white transition-all cursor-pointer"
+                className="p-2 hover:bg-slate-100 rounded-full text-slate-400 hover:text-slate-700 transition-all cursor-pointer"
               >
                 <X size={20} />
               </button>
             </div>
-            <div className="text-white/80">{children}</div>
+            <div className="text-slate-600">{children}</div>
           </motion.div>
         </div>
       )}

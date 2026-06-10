@@ -21,11 +21,11 @@ export function Slider({ min, max, value, onChange, labelPrefix = "", labelSuffi
         max={max}
         value={value}
         onChange={(e) => onChange(parseInt(e.target.value))}
-        className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#2ED3C6] outline-none"
+        className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600 outline-none"
       />
-      <div className="flex justify-between text-xs text-white/50">
+      <div className="flex justify-between text-xs text-slate-400">
         <span>{labelPrefix}{min}{labelSuffix}</span>
-        <strong className="text-white">{labelPrefix}{value}{labelSuffix}</strong>
+        <strong className="text-blue-600 font-semibold">{labelPrefix}{value}{labelSuffix}</strong>
         <span>{labelPrefix}{max}{labelSuffix}</span>
       </div>
     </div>

@@ -1,4 +1,5 @@
 export interface BlogPost {
+  id?: string;
   slug: string;
   title: string;
   excerpt: string;
@@ -7,8 +8,12 @@ export interface BlogPost {
   category: string;
   readTime: string;
   date: string;
-  seo: {
+  showImage?: boolean;
+  seo?: {
     title: string;
     description: string;
+    display_options?: {
+      show_image?: boolean;
+    };
   };
 }

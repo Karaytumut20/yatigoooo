@@ -16,12 +16,12 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           "inline-flex items-center justify-center font-semibold tracking-wide rounded-full cursor-pointer transition-all duration-300 active:scale-95 disabled:opacity-50 disabled:pointer-events-none",
           {
             // Variants
-            "bg-[#2ED3C6] text-[#021C24] hover:bg-white hover:shadow-[0_0_25px_rgba(46,211,198,0.4)]": variant === "primary",
-            "bg-transparent border border-white/16 text-white hover:bg-white/6 hover:border-white": variant === "secondary",
-            "bg-transparent text-white hover:bg-white/6": variant === "ghost",
-            "bg-white/8 border border-white/12 text-white backdrop-blur-md hover:bg-white/16": variant === "glass",
-            "bg-[#C6A15B] text-[#021C24] hover:bg-white hover:shadow-[0_0_25px_rgba(198,161,91,0.4)]": variant === "gold",
-            "bg-[#25D366] text-white hover:bg-[#20ba5a] hover:shadow-[0_0_25px_rgba(37,211,102,0.4)]": variant === "whatsapp",
+            "bg-blue-600 text-white hover:bg-blue-700 hover:shadow-[0_8px_30px_rgba(37,99,235,0.35)]": variant === "primary",
+            "bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-blue-300 hover:text-blue-600": variant === "secondary",
+            "bg-transparent text-slate-600 hover:bg-slate-100 hover:text-blue-600": variant === "ghost",
+            "bg-white/80 border border-slate-200 text-slate-700 backdrop-blur-md hover:bg-white hover:shadow-lg": variant === "glass",
+            "bg-slate-900 text-white hover:bg-slate-800 hover:shadow-[0_8px_30px_rgba(15,23,42,0.25)]": variant === "gold",
+            "bg-[#25D366] text-white hover:bg-[#20ba5a] hover:shadow-[0_8px_25px_rgba(37,211,102,0.35)]": variant === "whatsapp",
             
             // Sizes
             "px-4 py-2 text-xs": size === "sm",

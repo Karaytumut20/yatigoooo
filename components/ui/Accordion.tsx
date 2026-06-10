@@ -28,25 +28,25 @@ export function Accordion({ items, className }: AccordionProps) {
         return (
           <div
             key={index}
-            className="bg-white/4 border border-white/8 rounded-2xl overflow-hidden transition-all duration-300"
+            className="bg-white border border-slate-200 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-md"
           >
             <button
               onClick={() => toggle(index)}
-              className="w-full flex items-center justify-between p-5 text-left text-white font-semibold text-[15px] sm:text-base cursor-pointer"
+              className="w-full flex items-center justify-between p-5 text-left text-slate-800 font-semibold text-[15px] sm:text-base cursor-pointer break-words"
             >
-              <span>{item.question}</span>
+              <span className="break-words overflow-wrap-anywhere pr-3 flex-1">{item.question}</span>
               <ChevronDown
                 size={18}
-                className={cn("text-white/60 transition-transform duration-300", isOpen && "rotate-180 text-[#2ED3C6]")}
+                className={cn("text-slate-400 transition-transform duration-300 shrink-0", isOpen && "rotate-180 text-blue-600")}
               />
             </button>
             <div
               className={cn(
-                "transition-all duration-300 ease-out overflow-hidden max-h-0",
-                isOpen && "max-h-[300px]"
+                "transition-all duration-300 ease-out overflow-hidden",
+                isOpen ? "max-h-[1000px]" : "max-h-0"
               )}
             >
-              <div className="p-5 pt-0 text-white/70 text-sm sm:text-[15px] leading-relaxed border-t border-white/5">
+              <div className="p-5 pt-0 text-slate-600 text-sm sm:text-[15px] leading-relaxed border-t border-slate-100 break-words overflow-wrap-anywhere whitespace-pre-wrap">
                 {item.answer}
               </div>
             </div>

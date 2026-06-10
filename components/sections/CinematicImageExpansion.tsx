@@ -32,7 +32,6 @@ export function CinematicImageExpansion({
   const imageWrapperRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
-  const bgTextRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -45,9 +44,8 @@ export function CinematicImageExpansion({
     const imageWrapper = imageWrapperRef.current;
     const content = contentRef.current;
     const overlay = overlayRef.current;
-    const bgText = bgTextRef.current;
 
-    if (!section || !imageWrapper || !content || !overlay || !bgText) return;
+    if (!section || !imageWrapper || !content || !overlay) return;
 
     // Responsive trigger options
     const isMobile = window.innerWidth < 768;
@@ -69,12 +67,6 @@ export function CinematicImageExpansion({
       opacity: 0,
       y: -50,
       scale: 0.95,
-      duration: 1,
-    }, 0);
-
-    tl.to(bgText, {
-      opacity: 0,
-      scale: 0.9,
       duration: 1,
     }, 0);
 
@@ -105,37 +97,30 @@ export function CinematicImageExpansion({
   }, []);
 
   return (
-    <div ref={sectionRef} className="relative h-screen w-full bg-[#021C24] overflow-hidden flex items-center">
+    <div ref={sectionRef} className="relative h-screen w-full bg-white overflow-hidden flex items-center">
       
-      {/* Background large brand text */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-5">
-        <span ref={bgTextRef} className="font-serif text-[18vw] font-bold text-white/5 opacity-[0.06] tracking-tighter leading-none select-none">
-          YATIGOTR
-        </span>
-      </div>
-
       {/* Grid container with initial small layout card */}
       <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-20 w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center h-full">
         
         {/* Left header text - collapses on scroll */}
         <div ref={contentRef} className="lg:col-span-7 flex flex-col gap-6 text-left py-12">
-          <span className="text-xs uppercase tracking-widest text-[#2ED3C6] font-bold">
+          <span className="text-xs uppercase tracking-widest text-blue-600 font-bold">
             {eyebrow}
           </span>
-          <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-light text-white leading-[1.1] tracking-tight">
-            İstanbul Boğazı’nda <br />
-            <span className="text-[#2ED3C6] font-medium italic">Size Özel</span> Yat Deneyimi
+          <h1 className="font-sans text-4xl sm:text-6xl lg:text-7xl font-bold text-slate-900 leading-[1.08] tracking-tight">
+            İstanbul Boğazı'nda <br />
+            <span className="text-blue-600 font-medium">Size Özel</span> Yat Deneyimi
           </h1>
-          <p className="text-white/75 text-base sm:text-lg lg:text-xl font-light leading-relaxed max-w-[620px]">
+          <p className="text-slate-500 text-base sm:text-lg lg:text-xl font-light leading-relaxed max-w-[620px]">
             {description}
           </p>
-          <div className="flex flex-wrap gap-6 mt-6 border-t border-white/10 pt-6">
-            <div className="flex items-center gap-2.5 text-xs sm:text-sm text-white/70">
-              <CheckCircle2 size={18} className="text-[#2ED3C6]" />
+          <div className="flex flex-wrap gap-6 mt-6 border-t border-slate-200 pt-6">
+            <div className="flex items-center gap-2.5 text-xs sm:text-sm text-slate-500">
+              <CheckCircle2 size={18} className="text-blue-600" />
               <span>Güvenli Ödeme</span>
             </div>
-            <div className="flex items-center gap-2.5 text-xs sm:text-sm text-white/70">
-              <CheckCircle2 size={18} className="text-[#2ED3C6]" />
+            <div className="flex items-center gap-2.5 text-xs sm:text-sm text-slate-500">
+              <CheckCircle2 size={18} className="text-blue-600" />
               <span>Profesyonel Mürettebat</span>
             </div>
           </div>
@@ -145,9 +130,9 @@ export function CinematicImageExpansion({
         <div className="lg:col-span-5 relative w-full h-[400px] sm:h-[460px] flex items-center justify-center">
           <div 
             ref={imageWrapperRef}
-            className="absolute w-[90%] h-[90%] sm:w-[85%] sm:h-[85%] border border-white/12 rounded-[28px] overflow-hidden z-10 bg-[#063B45]"
+            className="absolute w-[90%] h-[90%] sm:w-[85%] sm:h-[85%] border border-slate-200 rounded-2xl overflow-hidden z-10 bg-slate-100"
           >
-            <div className="absolute inset-0 bg-[#021c24]/40 z-10 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-br from-[#0F172A]/40 via-transparent to-transparent z-10 pointer-events-none" />
             <Image
               src={imageSrc}
               alt={imageAlt}
@@ -155,11 +140,11 @@ export function CinematicImageExpansion({
               priority
               className="object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#021C24]/80 via-transparent to-transparent h-1/2 bottom-0 z-10" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/60 via-transparent to-transparent h-1/2 bottom-0 z-10" />
 
             {/* Expands overlay text at full scale */}
             <div ref={overlayRef} className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center p-6 sm:p-12 opacity-0">
-              <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl text-white mb-6 max-w-2xl leading-tight">
+              <h2 className="font-sans text-3xl sm:text-5xl lg:text-6xl text-white mb-6 max-w-2xl leading-tight font-bold">
                 {title}
               </h2>
               <p className="text-white/80 text-sm sm:text-base lg:text-lg max-w-[580px] leading-relaxed mb-8">

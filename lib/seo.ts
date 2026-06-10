@@ -15,13 +15,13 @@ export function getSiteMetadata(title: string, description: string, path = "") {
       title,
       description,
       url,
-      siteName: "Bosphorus Yacht Charter",
+      siteName: "yatigotr",
       images: [
         {
           url: "https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?auto=format&fit=crop&q=80&w=1200",
           width: 1200,
           height: 630,
-          alt: "Bosphorus Yacht Charter",
+          alt: "yatigotr",
         },
       ],
       locale: "tr_TR",
